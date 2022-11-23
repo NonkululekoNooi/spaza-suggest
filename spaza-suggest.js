@@ -1,11 +1,8 @@
-import ShortUniqueId from 'short-unique-id';
 
-export default function SpazaSuggest (db){
-
-    const uid = new ShortUniqueId({ length: 5 });
-
-    //// returns client code
-    async function registerClient(username){
+module.exports = function spazaSuggest(db){
+const ShortUniqueId = require("short-unique-id");
+const uid = new ShortUniqueId({ length: 5 });
+async function registerClient(username){
         // get the code
 
         const uniqCode = uid();
@@ -16,7 +13,7 @@ export default function SpazaSuggest (db){
 
     // returns the user if it's a valid code
     async function clientLogin(code)  {
-        const client = await db.oneOrNone(`select * from spaza_client where code = $1`, [code]);
+        const client = await db.oneOrNone(`select code from spaza_client where code = $1`, [code]);
         return client
     }
 
@@ -112,3 +109,8 @@ export default function SpazaSuggest (db){
         clientLogin
     }
 }
+// import ShortUniqueId from 'short-unique-id';
+
+// export default function SpazaSuggest (db){
+
+//     const uid = new ShortUniqueId({ length: 5 });
